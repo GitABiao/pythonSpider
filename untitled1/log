@@ -1,0 +1,8 @@
+
+ 问题描述：python 安装lxml出错：
+ win10，x64，python2.7，Visual2013.
+ error: Microsoft Visual C++ 10.0 is required (Unable to find vcvarsall.bat).
+ 问题解决：http://www.oschina.net/question/2294527_244245
+    Visual Studio 2010 (VS10)设置 VS90COMNTOOLS=%VS100COMNTOOLS%
+    Visual Studio 2012 (VS11)设置 VS90COMNTOOLS=%VS110COMNTOOLS%
+    Visual Studio 2013 (VS12)设置 VS90COMNTOOLS=%VS120COMNTOOLS%
