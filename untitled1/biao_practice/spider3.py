@@ -13,6 +13,7 @@ from bs4 import BeautifulSoup
 import MySQLdb
 y = 0
 x = 0
+z = 0
 def Mysql(id,name,imageurl,FLAG):
   conn = MySQLdb.connect(
     host='localhost',
@@ -27,12 +28,11 @@ def Mysql(id,name,imageurl,FLAG):
     select = "select * from imageinfor"
     cur.execute(select)
     for row in cur:
-      print "id=%s,name=%s,passwd=%s" % row
+      print "id=%s,name=%s,url=%s" % row
     print cur.rowcount
   elif FLAG==1:
-    values = [str(name),str(imageurl)]
-    insert = "insert into imageinfor(imagename,imageurl)values(?,?)"
-    cur.execute(insert,values)
+    value=[id,name,imageurl]
+    cur.execute("insert into imageinfor values(%s,%s,%s)",value)
     print "已经添加信息到mysql"
     print cur.rowcount
   conn.commit()
@@ -64,6 +64,7 @@ def getImageInfor(downLink):
     print '获取Image的链接'
     imgLink=urlparse.urljoin("http://www.bz55.com", imgurl)
     print "getDownlink:%s" %imgLink
+    #Mysql(y,y,imgLink,1)
 
 #进入链接
 def initLink(html,dir):
@@ -135,3 +136,5 @@ if __name__ == '__main__':
   print imageurl
   initLink(html, urlList[link])
   print "Download has finished."
+  print Mysql(x,y,z,0)
+
