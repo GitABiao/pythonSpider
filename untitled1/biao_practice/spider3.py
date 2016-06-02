@@ -90,6 +90,10 @@ def initLink(html,dir):
       downLink=getHtml(downUrl)
       getImageInfor(downLink)
       downloadImg(downLink,dir)
+      img = Image.open()
+      w, h = img.size
+      img.thumbnail((w // 4, h // 4))
+      img.save("D:/ImageDownload/chemobizhi/%s.jpg") % x
 #下载图片,现在就差url的问题。怎么连接rul之间
 def downloadImg(html,dirName):
   global x
@@ -102,7 +106,7 @@ def downloadImg(html,dirName):
   dir = str(dirName)
   foldername = str(t.__getattribute__("tm_mon"))+"-"+str(t.__getattribute__("tm_mday"))
   print(foldername)
-  picpath = 'D:/Program Files/Apache24/htdocs/image/%s/%s' % (dir,foldername) #下载到的本地目录
+  picpath = 'D:/Program Files/Apache24/htdocs/image%s%s' % (dir,foldername) #下载到的本地目录
   if not os.path.exists(picpath):   #路径不存在时创建一个
     os.makedirs(picpath)
   print imglist
@@ -110,9 +114,9 @@ def downloadImg(html,dirName):
     try:
       imageurl=urlparse.urljoin("http://www.bz55.com",imgurl)
       #print urlparse.urljoin("http://www.bz55.com",imgurl)
-      target = picpath+'\\%s.jpg' % x
+      target = picpath+'%s.jpg' % x
       #print(target)
-      print 'Downloading image to location: ' + target + '\nurl=' + imageurl
+      print 'Downloading image to location: ' + target + '   nurl=' + imageurl
       image = urllib.urlretrieve(imageurl, target)
       x=x+1
       print x
