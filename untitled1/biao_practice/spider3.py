@@ -9,6 +9,7 @@ import time
 import os
 import urlparse
 import winsound
+from PIL import Image
 from bs4 import BeautifulSoup
 import MySQLdb
 y = 0
@@ -88,7 +89,7 @@ def initLink(html,dir):
       downUrl="http://www.bz55.com"+link['href']
       downLink=getHtml(downUrl)
       getImageInfor(downLink)
-      #downloadImg(downLink,dir)
+      downloadImg(downLink,dir)
 #下载图片,现在就差url的问题。怎么连接rul之间
 def downloadImg(html,dirName):
   global x
@@ -101,7 +102,7 @@ def downloadImg(html,dirName):
   dir = str(dirName)
   foldername = str(t.__getattribute__("tm_mon"))+"-"+str(t.__getattribute__("tm_mday"))
   print(foldername)
-  picpath = 'D:\\ImageDownload\\%s\\%s' % (dir,foldername) #下载到的本地目录
+  picpath = 'D:/Program Files/Apache24/htdocs/image/%s/%s' % (dir,foldername) #下载到的本地目录
   if not os.path.exists(picpath):   #路径不存在时创建一个
     os.makedirs(picpath)
   print imglist
@@ -136,5 +137,5 @@ if __name__ == '__main__':
   print imageurl
   initLink(html, urlList[link])
   print "Download has finished."
-  print Mysql(x,y,z,0)
+  Mysql(x,y,z,0)
 
