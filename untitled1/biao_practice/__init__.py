@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 from PIL import Image
 import glob ,os
+#有错误
 def changImage():
-    for files in glob.glob("D:/ImageDownload/chemobizhi/5-18/*.jpg"):
+    for files in glob.glob("D:/ImageDownload/chemobizhi/*.jpg"):
         filepath, filename = os.path.split(files)
         filterame, exts = os.path.splitext(filename)
         # 输出路径

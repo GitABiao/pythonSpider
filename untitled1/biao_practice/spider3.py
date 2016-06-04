@@ -9,13 +9,31 @@ import time
 import os
 import urlparse
 import winsound
+import glob ,os
 from PIL import Image
 from bs4 import BeautifulSoup
 import MySQLdb
 y = 0
 x = 0
 z = 0
-def Mysql(id,name,imageurl,FLAG):
+def changImage():
+    for files in glob.glob("D:/ImageDownload/chemobizhi/*.jpg"):
+        filepath, filename = os.path.split(files)
+        filterame, exts = os.path.splitext(filename)
+        # 输出路径
+        opfile = r'D:/ImageDownload/chemobizhi/'
+        # 判断opfile是否存在，不存在则创建
+        if (os.path.isdir(opfile) == False):
+            os.mkdir(opfile)
+        im = Image.open(files)
+        w, h = im.size
+        im_ss = im.resize((int(w * 0.12), int(h * 0.12)))
+        im_ss.save(opfile + filterame + '.jpg')
+def Mysql(name,imageurl,leibie,FLAG):
+
+  imagename=name
+  imageurl1=imageurl
+  leibie1=leibie
   conn = MySQLdb.connect(
     host='localhost',
     port=3306,
@@ -29,29 +47,24 @@ def Mysql(id,name,imageurl,FLAG):
     select = "select * from imageinfor"
     cur.execute(select)
     for row in cur:
-      print "id=%s,name=%s,url=%s" % row
+      print "id=%s,name=%s,url=%s,type=%s" % row
     print cur.rowcount
   elif FLAG==1:
-    value=[id,name,imageurl]
-    cur.execute("insert into imageinfor values(%s,%s,%s)",value)
+    value=[imagename,imageurl1,leibie1]
+    print value
+    cur.execute("insert imageinfor values(null,%s,%s,%s)",value)
     print "已经添加信息到mysql"
     print cur.rowcount
   conn.commit()
   cur.close()
   conn.close()
-class Image(object):
-  def __init__(self, name, url):
-    self.name = name
-    self.url = url
-  def geturl(self):
-    return self.url
 #获取url,这里的url需要更改下，只能识别个别网址
 def getHtml(url):
   page = urllib.urlopen(url)
   html = page.read()
   return html
 #获取图片链接
-def getImageInfor(downLink):
+def getImageInfor(downLink,leibie):
   global y
   soup = BeautifulSoup(downLink)
   print "所有的img标签："
@@ -65,10 +78,10 @@ def getImageInfor(downLink):
     print '获取Image的链接'
     imgLink=urlparse.urljoin("http://www.bz55.com", imgurl)
     print "getDownlink:%s" %imgLink
-    #Mysql(y,y,imgLink,1)
+    Mysql(y,imgLink,leibie,1)
 
 #进入链接
-def initLink(html,dir):
+def initLink(html,dir,leibie):
   count=0
   soup = BeautifulSoup(html)
   print "下载的图片类型"
@@ -88,12 +101,9 @@ def initLink(html,dir):
       print "http://www.bz55.com"+link['href']
       downUrl="http://www.bz55.com"+link['href']
       downLink=getHtml(downUrl)
-      getImageInfor(downLink)
+      getImageInfor(downLink,leibie)
       downloadImg(downLink,dir)
-      img = Image.open()
-      w, h = img.size
-      img.thumbnail((w // 4, h // 4))
-      img.save("D:/ImageDownload/chemobizhi/%s.jpg") % x
+
 #下载图片,现在就差url的问题。怎么连接rul之间
 def downloadImg(html,dirName):
   global x
@@ -106,7 +116,7 @@ def downloadImg(html,dirName):
   dir = str(dirName)
   foldername = str(t.__getattribute__("tm_mon"))+"-"+str(t.__getattribute__("tm_mday"))
   print(foldername)
-  picpath = 'D:/Program Files/Apache24/htdocs/image%s%s' % (dir,foldername) #下载到的本地目录
+  picpath = 'D:/Program Files/Apache24/htdocs/image%s%s/' % (dir,foldername) #下载到的本地目录
   if not os.path.exists(picpath):   #路径不存在时创建一个
     os.makedirs(picpath)
   print imglist
@@ -139,7 +149,8 @@ if __name__ == '__main__':
   html = getHtml(imageurl)
   print"下载地址"
   print imageurl
-  initLink(html, urlList[link])
+  initLink(html, urlList[link],link)
   print "Download has finished."
-  Mysql(x,y,z,0)
+  Mysql(x,y,link,0)
+  changImage()
 

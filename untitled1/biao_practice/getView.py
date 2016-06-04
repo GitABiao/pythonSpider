@@ -11,12 +11,12 @@ def getHtml(url):
 
 def initLink(html):
   soup = BeautifulSoup(html)
-  #print soup.prettify()
-  print soup.body.contents
-  print soup.body.children
+  print soup.prettify()
+  #print soup.body.contents
+  #print soup.body.children
 
-  for string in soup.stripped_strings:
-    print string
+  #for string in soup.stripped_strings:
+   # print string
   #print soup.head.meta.attrs
 
 
@@ -30,7 +30,7 @@ if __name__ == '__main__':
 **	 Created on  2016-04-27	       **
 **	   @author: biao		       **
 *************************************'''
-  url="http://www.bz55.com/qitabizhi/"
+  url="http://www.ui.cn/"
   html = getHtml(url)
   initLink(html)
   print (getCurrentTime())
