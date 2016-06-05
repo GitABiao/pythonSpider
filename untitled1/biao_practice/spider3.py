@@ -78,7 +78,7 @@ def getImageInfor(downLink,leibie):
     print '获取Image的链接'
     imgLink=urlparse.urljoin("http://www.bz55.com", imgurl)
     print "getDownlink:%s" %imgLink
-    Mysql(y,imgLink,leibie,1)
+    #Mysql(y,imgLink,leibie,1)
 
 #进入链接
 def initLink(html,dir,leibie):
@@ -88,12 +88,17 @@ def initLink(html,dir,leibie):
   print soup.title.string
   print "我们需要的东西："
   print "body.children"
-  for child in soup.body.children:
-    print child
+  #for child in soup.body.children:
+   # print child
   print "所有链接："
   for test in soup.find_all(target="_blank"):
       print test['href']
-  reg= r'\/\w{0,11}\/\d{0,4}\/\d{0,5}\/\d{0,7}\.html'
+  reg1 = r'\/\w{0,11}\/\d{0,7}\.html'
+  reg2 = r'\/\w{0,11}\/\d{0,4}\/\d{0,5}\/\d{0,7}\.html'
+  if leibie==1 or leibie==6 or leibie==7 or leibie==8:
+    reg=reg1
+  else:
+    reg=reg2
   for link in soup.find_all(target="_blank"):
     if re.match(reg,link['href']):
       count=count+1
@@ -151,6 +156,6 @@ if __name__ == '__main__':
   print imageurl
   initLink(html, urlList[link],link)
   print "Download has finished."
-  Mysql(x,y,link,0)
-  changImage()
+  #Mysql(x,y,link,0)
+  #changImage()
 
