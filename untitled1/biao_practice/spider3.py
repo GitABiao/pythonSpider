@@ -17,11 +17,11 @@ y = 0
 x = 0
 z = 0
 def changImage():
-    for files in glob.glob("D:/ImageDownload/chemobizhi/*.jpg"):
+    for files in glob.glob("D:/Program Files/Apache24/htdocs/image/qitabizhi/6-7/*.jpg"):
         filepath, filename = os.path.split(files)
         filterame, exts = os.path.splitext(filename)
         # 输出路径
-        opfile = r'D:/ImageDownload/chemobizhi/'
+        opfile = r'D:/Program Files/Apache24/htdocs/image/qitabizhi/6-7change'
         # 判断opfile是否存在，不存在则创建
         if (os.path.isdir(opfile) == False):
             os.mkdir(opfile)
@@ -78,7 +78,7 @@ def getImageInfor(downLink,leibie):
     print '获取Image的链接'
     imgLink=urlparse.urljoin("http://www.bz55.com", imgurl)
     print "getDownlink:%s" %imgLink
-    #Mysql(y,imgLink,leibie,1)
+    Mysql(y,imgLink,leibie,1)
 
 #进入链接
 def initLink(html,dir,leibie):
@@ -91,8 +91,8 @@ def initLink(html,dir,leibie):
   #for child in soup.body.children:
    # print child
   print "所有链接："
-  for test in soup.find_all(target="_blank"):
-      print test['href']
+  #for test in soup.find_all(target="_blank"):
+      #print test['href']
   reg1 = r'\/\w{0,11}\/\d{0,7}\.html'
   reg2 = r'\/\w{0,11}\/\d{0,4}\/\d{0,5}\/\d{0,7}\.html'
   if leibie==1 or leibie==6 or leibie==7 or leibie==8:
@@ -103,7 +103,7 @@ def initLink(html,dir,leibie):
     if re.match(reg,link['href']):
       count=count+1
       print"第%d个链接"%count
-      print "http://www.bz55.com"+link['href']
+      #print "http://www.bz55.com"+link['href']
       downUrl="http://www.bz55.com"+link['href']
       downLink=getHtml(downUrl)
       getImageInfor(downLink,leibie)
@@ -156,6 +156,6 @@ if __name__ == '__main__':
   print imageurl
   initLink(html, urlList[link],link)
   print "Download has finished."
-  #Mysql(x,y,link,0)
+  Mysql(x,y,link,0)
   #changImage()
 

@@ -2,7 +2,6 @@
 import urllib
 from bs4 import BeautifulSoup
 import time
-
 def getHtml(url):
   page = urllib.urlopen(url)
   html = page.read()
@@ -18,12 +17,8 @@ def initLink(html):
   #for string in soup.stripped_strings:
    # print string
   #print soup.head.meta.attrs
-
-
 def getCurrentTime():
   pass
-
-
 if __name__ == '__main__':
   print '''*************************************
 **	  Welcome to use Spider	       **
