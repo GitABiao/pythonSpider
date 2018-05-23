@@ -1,10 +1,10 @@
 # -*- coding:utf-8 -*-
-import urllib
-import urllib2
+import urllib.request
+import urllib.error
 import re
 import time
 import types
-import tool
+
 from bs4 import BeautifulSoup
 
 
@@ -24,15 +24,15 @@ class Page:
     # 通过页面的URL来获取页面的代码
     def getPageByURL(self, url):
         try:
-            request = urllib2.Request(url)
-            response = urllib2.urlopen(request)
+            request = urllib.Request(url)
+            response = urllib.urlopen(request)
             return response.read().decode("utf-8")
-        except urllib2.URLError, e:
+        except error.URLError, e:
             if hasattr(e, "code"):
-                print self.getCurrentTime(), "获取问题页面失败,错误代号", e.code
+                print (self.getCurrentTime(), "获取问题页面失败,错误代号", e.code)
                 return None
             if hasattr(e, "reason"):
-                print self.getCurrentTime(), "获取问题页面失败,原因", e.reason
+                print (self.getCurrentTime(), "获取问题页面失败,原因", e.reason)
                 return None
 
     # 传入一个List,返回它的标签里的内容,如果为空返回None

@@ -1,7 +1,6 @@
 # -*- coding:utf-8 -*-
 
 import urllib
-import urllib2
 import re
 import time
 import types
@@ -34,15 +33,15 @@ class Spider:
 
     # 通过传入网页页码来获取网页的HTML
     def getPageByNum(self, page_num):
-        request = urllib2.Request(self.getPageURLByNum(page_num))
+        request = urllib.Request(self.getPageURLByNum(page_num))
         try:
-            response = urllib2.urlopen(request)
-        except urllib2.URLError, e:
+            response = urllib.urlopen(request)
+        except urllib.URLError, e:
             if hasattr(e, "code"):
-                print self.getCurrentTime(), "获取页面失败,错误代号", e.code
+                print (self.getCurrentTime(), "获取页面失败,错误代号", e.code)
                 return None
             if hasattr(e, "reason"):
-                print self.getCurrentTime(), "获取页面失败,原因", e.reason
+                print (self.getCurrentTime(), "获取页面失败,原因", e.reason)
                 return None
         else:
             page = response.read().decode("utf-8")

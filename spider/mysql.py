@@ -16,7 +16,7 @@ class Mysql:
             self.db = MySQLdb.connect('ip', 'username', 'password', 'db_name')
             self.cur = self.db.cursor()
         except MySQLdb.Error, e:
-            print self.getCurrentTime(), "连接数据库错误，原因%d: %s" % (e.args[0], e.args[1])
+            print (self.getCurrentTime(), "连接数据库错误，原因%d: %s" % (e.args[0], e.args[1]))
 
     # 插入数据
     def insertData(self, table, my_dict):
